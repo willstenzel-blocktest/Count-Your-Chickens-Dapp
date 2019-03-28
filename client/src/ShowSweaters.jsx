@@ -54,7 +54,7 @@ class ShowSweaters extends React.Component {
       votingData[color] = number(oneVote)
     }
 
-    console.log("voting Data ", votingData);
+    console.log(" test 123 voting Data ", votingData);
 
     return (
       <ul>
