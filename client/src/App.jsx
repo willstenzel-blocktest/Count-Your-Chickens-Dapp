@@ -1,29 +1,9 @@
 import React from 'react';
 import './App.css';
-import ShowSweaters from './ShowSweaters'
-import MakeVote from './MakeVote'
+import ShowChickens from './ShowChickens'
+import SetChickens from './SetChickens'
 
 
-
-
-
-
-// class Greetings extends Component {
-//   render() {
-//     return (
-//       <div>Hey you! {this.props.firstName} {this.props.lastName}!</div>
-//     );
-//   }
-// }
-
-
-// const App = () => (
-//   <div>
-//     <WeatherOracleForm firstName="John"/>
-//   </div>
-// )
-//
-//
 
 
 class App extends React.Component {
@@ -55,11 +35,11 @@ state = { loading: true, drizzleState: null };
    if (this.state.loading) return "Loading Drizzle...";
 
    return (
-   <div> <ShowSweaters
+   <div> <ShowChickens
             drizzle={this.props.drizzle}
             drizzleState={this.state.drizzleState}/>
 
-          <MakeVote
+          <SetChickens
             drizzle = {this.props.drizzle}
             drizzleState= {this.state.drizzleState}/>
    </div>

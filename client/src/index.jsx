@@ -3,18 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import VoteForSweaterPt3 from './contracts/VoteForSweaterPt3'
+import SimpleStorage from './contracts/SimpleStorage.json'
 import {Drizzle} from 'drizzle'
 
-
-
-
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 // let drizzle know what contracts we want and how to access our test blockchain
 const options = {
-  contracts: [VoteForSweaterPt3],
+  contracts: [SimpleStorage],
   // web3: {
   //   fallback: {
   //     type: "http",

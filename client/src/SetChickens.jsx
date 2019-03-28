@@ -1,6 +1,6 @@
 import React from "react";
 
-class MakeVote extends React.Component {
+class SetChickens extends React.Component {
   state = { stackId: null };
 
   handleKeyDown = e => {
@@ -13,10 +13,10 @@ class MakeVote extends React.Component {
   setValue = value => {
     const { drizzle, drizzleState } = this.props;
 
-    const contract = drizzle.contracts.VoteForSweaterPt3;
+    const contract = drizzle.contracts.SimpleStorage;
 
     // let drizzle know we want to call the `set` method with `value`
-    const stackId = contract.methods["sweaterVote"].cacheSend(value, {
+    const stackId = contract.methods["set"].cacheSend(value, {
 
       from: drizzleState.accounts[0]
     });
@@ -42,12 +42,11 @@ class MakeVote extends React.Component {
   render() {
     return (
       <div>
-        <input type="text" onKeyDown={this.handleKeyDown} />
-
+        <input type="number" onKeyDown={this.handleKeyDown} />
         <div>{this.getTxStatus()}</div>
       </div>
     );
   }
 }
 
-export default MakeVote;
+export default SetChickens;
