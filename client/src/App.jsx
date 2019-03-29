@@ -20,21 +20,21 @@ state = { loading: true, drizzleState: null };
 
    var assistInstance = assist.init(bncAssistConfig);
 
-   assistInstance.onboard()
-     .then(function(success) {
-       // User has been successfully onboarded and is ready to transact
-       // This means we can be sure of the follwing user properties:
-       //  - They are using a compatible browser
-       //  - They have a web3-enabled wallet installed
-       //  - The w    console.log('These are the methods ', contract.methods)allet is connected to the config-specified networkId
-       //  - The wallet is unlocked and contains at least `minimumBalance` in wei
-       //  - They have connected their wallet to the dapp, congruent with EIP1102
-     })
-     .catch(function(error) {
-       // The user exited onboarding before completion
-       // Will let you know what stage of onboarding the user was up to when they exited
-       console.log(error.msg);
-     })
+   // assistInstance.onboard()
+   //   .then(function(success) {
+   //     // User has been successfully onboarded and is ready to transact
+   //     // This means we can be sure of the follwing user properties:
+   //     //  - They are using a compatible browser
+   //     //  - They have a web3-enabled wallet installed
+   //     //  - The w    console.log('These are the methods ', contract.methods)allet is connected to the config-specified networkId
+   //     //  - The wallet is unlocked and contains at least `minimumBalance` in wei
+   //     //  - They have connected their wallet to the dapp, congruent with EIP1102
+   //   })
+   //   .catch(function(error) {
+   //     // The user exited onboarding before completion
+   //     // Will let you know what stage of onboarding the user was up to when they exited
+   //     console.log(error.msg);
+   //   })
 
 
    // Add Drizzle
@@ -61,10 +61,12 @@ state = { loading: true, drizzleState: null };
    if (this.state.loading) return "Loading Drizzle...";
 
    return (
-   <div> <ShowChickens
+   <div className="container">
+      <h1>Count Your Chickens!</h1>
+        <ShowChickens
             drizzle={this.props.drizzle}
             drizzleState={this.state.drizzleState}/>
-
+          <br/>
           <SetChickens
             drizzle = {this.props.drizzle}
             drizzleState= {this.state.drizzleState}/>

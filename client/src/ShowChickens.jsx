@@ -6,7 +6,7 @@ import React from "react";
 // var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 class ShowChickens extends React.Component {
-  state = { chickenCountKey: null, currentChickenCount : 1}
+  state = { chickenCountKey: null }
 
  componentDidMount() {
     const { drizzle } = this.props;
@@ -16,15 +16,13 @@ class ShowChickens extends React.Component {
 
     // save the `dataKey` to local component state for later reference
     this.setState({ chickenCountKey });
-
-    this.getChickenCount()
   }
 
   getChickenCount() {
     const {drizzleState} = this.props
     const contract = drizzleState.contracts.SimpleStorage
     const num = contract.get[this.state.chickenCountKey]
-    const number = (number) => {if (typeof number === 'undefined') {return -1} else {return parseInt(number.value)}}
+    const number = (number) => {if (typeof number === 'undefined') {return 0} else {return parseInt(number.value)}}
 
     let updatedCount = number(num)
     return updatedCount
@@ -36,14 +34,14 @@ class ShowChickens extends React.Component {
     const num = contract.get[this.state.chickenCountKey]
     const number = (number) => {if (typeof number === 'undefined') {return 1} else {return parseInt(number.value)}}
     let nextCount = number(num)
-    
+
     return (this.getChickenCount() !== nextCount);
   }
 
   render() {
     let currentChickenCount = this.getChickenCount()
     return (
-      <div>
+      <div className="container">
       <p>The current number of chickens is {currentChickenCount}</p>
         <ChickenFarm numChickens={currentChickenCount} />
     </div>
@@ -61,9 +59,7 @@ function ChickenFarm(props) {
 }
 
 function AddChicken(props) {
-  return <img src={require("./static/chicken" + props.chickenId + ".png")} alt={props.alt} style={{marginBottom:props.TOP + 'em', marginLeft:props.LEFT + 'em', width:'50px', height:'50px'}}/>
-  // return <img  src={require("./static/chicken1.png")} style={{marginBottom:props.TOP + 'em', marginLeft:props.LEFT + 'em', width:'50px', height:'50px'}}/>
-  // return <img  src="./static/chicken1.png" style={{marginBottom:props.TOP + 'em'; marginLeft:{props.LEFT} + 'em'; WIDTH:'50em'; HEIGHT:'50em';}}/>
+  return <img src={require("./static/chicken" + props.chickenId + ".png")} alt={props.alt} style={{position: 'relative', marginTop:props.TOP + 'em', marginLeft:props.LEFT + 'em', width:'50px', height:'50px'}}/>
 }
 
 export default ShowChickens;

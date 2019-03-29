@@ -41,8 +41,8 @@ class SetChickens extends React.Component {
 
   render() {
     return (
-      <div>
-        <input type="number" onKeyDown={this.handleKeyDown} />
+      <div className="container">
+        <input className="form-control" placeholder="Set Number of Chickens" type="number" onKeyDown={this.handleKeyDown} />
         <div>{this.getTxStatus()}</div>
       </div>
     );
