@@ -6,35 +6,46 @@ import React from "react";
 // var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 class ShowChickens extends React.Component {
-  state = { chickenCountKey: {} };
+  state = { chickenCountKey: null, currentChickenCount : 1}
 
-  componentDidMount() {
-    const { drizzle} = this.props;
+ componentDidMount() {
+    const { drizzle } = this.props;
     const contract = drizzle.contracts.SimpleStorage;
-    console.log("drizzle ", drizzle);
-    console.log("SimpleStorage ", contract);
-
-    console.log('These are the methods ' + contract.methods)
 
     let chickenCountKey = contract.methods["get"].cacheCall()
 
-    console.log("chickenCountKey ", chickenCountKey);
     // save the `dataKey` to local component state for later reference
     this.setState({ chickenCountKey });
+
+    this.getChickenCount()
+  }
+
+  getChickenCount() {
+    const {drizzleState} = this.props
+    const contract = drizzleState.contracts.SimpleStorage
+    const num = contract.get[this.state.chickenCountKey]
+    const number = (number) => {if (typeof number === 'undefined') {return -1} else {return parseInt(number.value)}}
+
+    let updatedCount = number(num)
+    return updatedCount
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const {drizzleState} = nextProps
+    const contract = drizzleState.contracts.SimpleStorage
+    const num = contract.get[this.state.chickenCountKey]
+    const number = (number) => {if (typeof number === 'undefined') {return 1} else {return parseInt(number.value)}}
+    let nextCount = number(num)
+    
+    return (this.getChickenCount() !== nextCount);
   }
 
   render() {
-    // get the contract state from drizzleState
-    const { SimpleStorage } = this.props.drizzleState.contracts;
-
-    // get the number of chickens from the contract
-    const number = (number) => {if (typeof number === 'undefined') {return 0} else {return parseInt(number.value)}}
-    let numChickens = number(SimpleStorage.get[this.state.chickenCountKey])
-
+    let currentChickenCount = this.getChickenCount()
     return (
       <div>
-      <p>The current number of chickens is {numChickens}</p>
-        <ChickenFarm numChickens={numChickens} />
+      <p>The current number of chickens is {currentChickenCount}</p>
+        <ChickenFarm numChickens={currentChickenCount} />
     </div>
     );
   }
@@ -44,13 +55,14 @@ function ChickenFarm(props) {
   var jsxArray = [];
 
   for (var i = 0; i < props.numChickens; i++) {
-    jsxArray.push(<AddChicken TOP={Math.random()*20} LEFT={Math.random()*20} chickenId={Math.round(Math.random())} />)
+    jsxArray.push(<AddChicken key={i} alt={"chicken" + (i + 1)} TOP={Math.random()*10} LEFT={Math.random()*10} chickenId={Math.round(Math.random()) + 1} />)
   }
   return jsxArray;
 }
 
 function AddChicken(props) {
-  return <img  src={require("./static/chicken1.png")} style={{marginBottom:props.TOP + 'em', marginLeft:props.LEFT + 'em', width:'50px', height:'50px'}}/>
+  return <img src={require("./static/chicken" + props.chickenId + ".png")} alt={props.alt} style={{marginBottom:props.TOP + 'em', marginLeft:props.LEFT + 'em', width:'50px', height:'50px'}}/>
+  // return <img  src={require("./static/chicken1.png")} style={{marginBottom:props.TOP + 'em', marginLeft:props.LEFT + 'em', width:'50px', height:'50px'}}/>
   // return <img  src="./static/chicken1.png" style={{marginBottom:props.TOP + 'em'; marginLeft:{props.LEFT} + 'em'; WIDTH:'50em'; HEIGHT:'50em';}}/>
 }
 
